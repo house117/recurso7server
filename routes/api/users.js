@@ -114,7 +114,7 @@ router.get("/:id", async (req, res) => {
     }
 });
 
-// @route   DELETE api/ciudades/:id
+// @route   DELETE api/users/:id
 // @desc    Delete a user
 // @access  public
 router.delete("/:id", async (req, res) => {
