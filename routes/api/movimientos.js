@@ -185,6 +185,77 @@ router.get("/", async (req, res) => {
 // @access  public
 router.delete("/:id", async (req, res) => {
     try {
+
+
+        console.log("id mov recibido:"+req.params.id);
+        let movimientoAux = await Movimiento.findOne({ _id: req.params.id });
+        
+        if(movimientoAux){
+            console.log("HOLA JOSE EXISTE MOVAU");
+        }
+        //funcion prueba
+        let departamento = await Departamento.findOne({
+            _id: movimientoAux.id
+        });
+        if (movimientoAux.tipo == "Ingreso") {
+            console.log("Se prepara un movimiento de inreso");
+            if (departamento) {
+                console.log(
+                    "Encontró el departamento al que se le agregara jajajsdas"
+                );
+                console.log(
+                    "Cantidad del depto antes de la suma: " +
+                        departamento.saldo
+                );
+                departamento.saldo -= movimientoAux.cantidad;
+                console.log(
+                    "Cantidad del depto antes de la suma: " +
+                        departamento.saldo
+                );
+            }
+        }
+        if (movimientoAux.tipo == "Egreso") {
+            console.log("Se prepara un movimiento de inreso");
+            if (departamento) {
+                console.log(
+                    "Encontró el departamento al que se le agregara jajajsdas"
+                );
+                console.log(
+                    "Cantidad del depto antes de la suma: " +
+                        departamento.saldo
+                );
+                departamento.saldo += movimientoAux.cantidad;
+                console.log(
+                    "Cantidad del depto antes de la suma: " +
+                        departamento.saldo
+                );
+            }
+        }
+        departamento = await Departamento.findOneAndUpdate(
+            { _id: movimientoAux.id },
+            { $set: departamento },
+            { new: true, upsert: true }
+        );
+        
+        //fin funcion
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
         console.log("entro A DELETE Movimiento!");
         const movimiento = await Movimiento.findById(req.params.id);
         if (!movimiento) {
